@@ -1,8 +1,8 @@
 import React, {Component} from "react"
-import Login from "./Login"
-import Register from "./Register"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'mdbreact/dist/css/mdb.css'
+import Main from "./Main";
+
 //import axios from "axios";
 
 class App extends Component {
@@ -13,10 +13,9 @@ class App extends Component {
   render() {
     return (
         <div>
-        <Login/>
-        <Register/>
+          <Main/>
         </div>
-        )
+    )
   }
 }
 

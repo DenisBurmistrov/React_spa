@@ -1,0 +1,44 @@
+@font-face{
+    font-family: "Montserrat";
+    src: url(../font/8bitoperator_jve.ttf);
+}
+body {
+    background-image: url("https://c.wallhere.com/photos/cd/94/Pok_mon_pixel_art-89641.png!d");
+    background-size: 110%;
+    padding: 20px;
+    margin: 0;
+}
+h1, h2, p, ul, li {
+    font-family: sans-serif;
+}
+ul.header li {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+}
+ul.header {
+    background-color: transparent;
+    padding: 0;
+}
+ul.header li a {
+    color: #FFF;
+    text-decoration: none;
+    padding: 20px;
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    -webkit-font-smoothing : none;
+    font-size: 25px;
+}
+
+.title {
+    font-family: "Montserrat", sans-serif;
+    color: aquamarine;
+    -webkit-font-smoothing : none;
+    font-size: 50px;
+}
+
+.content {
+    background-color: transparent;
+    margin-left: 35%;
+}
+
