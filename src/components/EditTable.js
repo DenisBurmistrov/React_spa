@@ -1,42 +1,92 @@
-import React, {Component} from "react";
-import ReactDataGrid from "react-data-grid";
-import "../css/editTable.css";
+import React, {Component} from 'react'
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+import { Type } from 'react-bootstrap-table2-editor';
+import { MDBBtn } from "mdbreact";
+import CreateProject from "./CreateProject";
+import "../css/index.css";
 
-const columns = [
-    { key: "id", name: "ID", editable: true },
-    { key: "title", name: "Title", editable: true },
-    { key: "complete", name: "Complete", editable: true }
+
+const products = [ {
+    id: "1",
+    name: "project name",
+    description: "project description",
+    dateBegin: "2019-11-22",
+    dateEnd: "2020-11-22",
+    status: "project status",
+    delete: "1"
+
+} ];
+const columns = [{
+    dataField: 'id',
+    text: 'ID'
+}, {
+    dataField: 'name',
+    text: 'Name'
+}, {
+    dataField: 'description',
+    text: 'Description'
+}, {
+    dataField: 'dateBegin',
+    text: 'Date Begin',
+    editor: {
+        type: Type.DATE
+    }
+}, {
+    dataField: 'dateEnd',
+    text: 'Date End',
+    editor: {
+        type: Type.DATE
+    }
+}, {
+    dataField: 'status',
+    text: 'Status'
+},
+    {
+        dataField: "delete",
+        formatter: () => {
+                return <MDBBtn style={{marginLeft: 30}} color="danger">Delete</MDBBtn>
+        },
+        events: {
+            onClick: (e, column, columnIndex, row, rowIndex) => { console.log("row", row) },
+        },
+        editable: false,
+        text: 'Delete'
+    },
 ];
 
-const rows = [
-    { id: 0, title: "Task 1", complete: 20 },
-    { id: 1, title: "Task 2", complete: 40 },
-    { id: 2, title: "Task 3", complete: 60 }
-];
+const cellEdit = cellEditFactory({
+    mode: 'click',
+    afterSaveCell: (oldValue, newValue, row, column) => {
+        console.log("row", row);
+    },
+});
+
 
 class EditTable extends Component {
-    state = { rows };
 
-    onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-        this.setState(state => {
-            const rows = state.rows.slice();
-            for (let i = fromRow; i <= toRow; i++) {
-                rows[i] = { ...rows[i], ...updated };
-            }
-            return { rows };
-        });
+    state = {
+        isOpen: false
     };
-    render() {
-        return (
-            <ReactDataGrid
-                columns={columns}
-                rowGetter={i => this.state.rows[i]}
-                rowsCount={3}
-                onGridRowsUpdated={this.onGridRowsUpdated}
-                enableCellSelect={true}
-            />
-        );
-    }
+
+render() {
+    return (
+        <div>
+            <MDBBtn style={{right: 5}} color="default" onClick={this.btnCreateProject}>Create project</MDBBtn>
+            <CreateProject defaultOpen={this.state.isOpen}/>
+        <BootstrapTable
+        keyField='id'
+        data={products}
+        columns={columns}
+        cellEdit={cellEdit}
+    /></div>
+    );
 }
 
+    btnCreateProject = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+    };
+}
 export default EditTable

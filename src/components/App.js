@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'mdbreact/dist/css/mdb.css'
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import Main from "./Main";
 
 //import axios from "axios";

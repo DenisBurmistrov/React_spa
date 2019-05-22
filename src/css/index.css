@@ -42,3 +42,7 @@ ul.header li a {
     margin-left: 35%;
 }
 
+.md-form label {
+    color: black;
+}
+
