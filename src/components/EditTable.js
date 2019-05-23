@@ -5,18 +5,8 @@ import { Type } from 'react-bootstrap-table2-editor';
 import { MDBBtn } from "mdbreact";
 import CreateProject from "./CreateProject";
 import "../css/index.css";
+import axios from "axios";
 
-
-const products = [ {
-    id: "1",
-    name: "project name",
-    description: "project description",
-    dateBegin: "2019-11-22",
-    dateEnd: "2020-11-22",
-    status: "project status",
-    delete: "1"
-
-} ];
 const columns = [{
     dataField: 'id',
     text: 'ID'
@@ -38,14 +28,11 @@ const columns = [{
     editor: {
         type: Type.DATE
     }
-}, {
-    dataField: 'status',
-    text: 'Status'
 },
     {
         dataField: "delete",
         formatter: () => {
-                return <MDBBtn style={{marginLeft: 30}} color="danger">Delete</MDBBtn>
+                return <MDBBtn style={{marginLeft: 60}} color="danger">Delete</MDBBtn>
         },
         events: {
             onClick: (e, column, columnIndex, row, rowIndex) => { console.log("row", row) },
@@ -66,17 +53,25 @@ const cellEdit = cellEditFactory({
 class EditTable extends Component {
 
     state = {
-        isOpen: false
+        isOpen: false,
+        projects: []
     };
 
+    handler = (val) => {
+        this.setState({
+            isOpen: val
+        })
+    }
+
 render() {
+
     return (
         <div>
             <MDBBtn style={{right: 5}} color="default" onClick={this.btnCreateProject}>Create project</MDBBtn>
-            <CreateProject defaultOpen={this.state.isOpen}/>
+            <CreateProject defaultOpen={this.state.isOpen} projects={this.state.projects} handler = {this.handler}/>
         <BootstrapTable
         keyField='id'
-        data={products}
+        data={this.state.projects}
         columns={columns}
         cellEdit={cellEdit}
     /></div>
@@ -88,5 +83,19 @@ render() {
             isOpen: !this.state.isOpen
         })
     };
+
+    getProjects = () => {
+        console.log("getProjects starts")
+        axios.get(`http://localhost:8080/project/list`).then(res => {
+            this.setState({
+                projects: res.data
+            })
+        })
+    };
+
+    componentDidMount() {
+        this.getProjects()
+    }
+
 }
 export default EditTable
