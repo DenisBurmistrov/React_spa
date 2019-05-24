@@ -31,7 +31,7 @@ class Login extends Component {
                                         color="danger"
                                         type="button"
                                         className="btn-block z-depth-2"
-                                        onClick={this.handleLogin}
+                                        onClick={this.handlerLogin}
                                     >
                                         Log in
                                     </MDBBtn>
@@ -53,24 +53,11 @@ class Login extends Component {
         )
     };
 
-    handleLogin = (props) => {
+    handlerLogin = () => {
 
-        /*fetch(`api/login`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        }).then(resp => {
-            console.log(resp);
-        });*/
-        this.signIn()
-    };
-
-    signIn = () => {
-        console.log('login clicked')
-        let data = JSON.stringify({
+        console.log('login clicked');
+        this.props.handlerAuth(true)
+        /*let data = JSON.stringify({
             username: "admin",
             password: "admin"
         });
@@ -86,11 +73,8 @@ class Login extends Component {
                 console.log("response Post data", res.data);
                 console.log("response Post headers",res.headers);
 
-               /* axios.get(`http://localhost:8080/project/list`).then(res => {
-                    console.log("response Get", res);
-                    console.log("response Get data",res.data);
-                })*/
-            });
+            });*/
     }
+
 }
 export default Login;

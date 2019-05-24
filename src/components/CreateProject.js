@@ -8,12 +8,13 @@ class CreateProject extends Component {
     state = {
         isOpen: this.props.defaultOpen,
         projects: this.props.projects,
-        name: "default name",
-        description: "default description",
-        dateEnd: "2020-10-10"
+        dateEnd: this.props.defaultDateEnd,
+        name: "",
+        description: ""
     };
 
     render() {
+
         return this.state.isOpen && <div  style={{width: '50%'}}>
             <MDBInput
                 className="inputs"
@@ -48,21 +49,18 @@ class CreateProject extends Component {
     }
 
     handleInputName = (value) => {
-        console.log("name", value.target.value);
         this.setState({
             name: value.target.value
         });
     };
 
     handleInputDescription = (value) => {
-        console.log("description", value.target.value);
         this.setState({
             description: value.target.value
         });
     };
 
     handleInputDateEnd = (value) => {
-        console.log("dateEnd", value.target.value);
         this.setState({
             dateEnd: value.target.value
         });
@@ -82,9 +80,10 @@ class CreateProject extends Component {
             withCredentials: true
         })
             .then(res => {
-                this.props.handler(false)
+                this.props.handlerAddProject(false)
             });
     }
+
 }
 
 export default CreateProject
