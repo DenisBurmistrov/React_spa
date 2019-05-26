@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBInput } from 'mdbreact';
-import axios from "axios";
+import axios from "axios/index";
 
 class Login extends Component {
 
+
+    state: {
+        projectIds: []
+    };
     render() {
         return (
             <MDBContainer>
@@ -54,8 +58,7 @@ class Login extends Component {
     };
 
     handlerLogin = () => {
-
-        console.log('login clicked');
+        this.props.getProjectIds();
         this.props.handlerAuth(true)
         /*let data = JSON.stringify({
             username: "admin",

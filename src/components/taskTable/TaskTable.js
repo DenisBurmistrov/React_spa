@@ -3,56 +3,57 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import { Type } from 'react-bootstrap-table2-editor';
 import { MDBBtn } from "mdbreact";
-import CreateProject from "./CreateProject";
-import "../css/index.css";
+import CreateTask from "../taskTable/CreateTask";
+import "../../css/index.css";
 import axios from "axios";
 
-class EditTable extends Component {
+class TaskTable extends Component {
 
     state = {
         isOpen: false,
-        projects: [],
+        tasks: [],
+        projectIds: this.props.projectIds,
     };
 
-    handlerAddProject = (val) => {
+    handlerAddTask = (val) => {
         this.setState({
             isOpen: val
         });
-        this.getProjects()
+        this.getTasks()
     };
 
-render() {
+    render() {
+        return  (
+            <div>
+                <MDBBtn style={{right: 5}} color="default" onClick={this.btnCreateTask}>Create task</MDBBtn>
+                <CreateTask defaultOpen={this.state.isOpen} tasks={this.state.tasks}
+                               handlerAddTask = {this.handlerAddTask} defaultDateEnd={"2020-10-10"}
+                            projectIds={this.state.projectIds}/>
+                <BootstrapTable
+                    keyField='id'
+                    data={this.state.tasks}
+                    columns={this.columns}
+                    cellEdit={this.cellEdit}
+                /></div>
+        );
+    }
 
-    return  (
-        <div>
-            <MDBBtn style={{right: 5}} color="default" onClick={this.btnCreateProject}>Create project</MDBBtn>
-            <CreateProject defaultOpen={this.state.isOpen} projects={this.state.projects}
-                           handlerAddProject = {this.handlerAddProject} defaultDateEnd={"2020-10-10"}/>
-        <BootstrapTable
-        keyField='id'
-        data={this.state.projects}
-        columns={this.columns}
-        cellEdit={this.cellEdit}
-    /></div>
-    );
-}
-
-    btnCreateProject = () => {
+    btnCreateTask = () => {
         this.setState({
             isOpen: !this.state.isOpen
         })
     };
 
-    getProjects = () => {
-        axios.get(`http://localhost:8080/project/list`).then(res => {
+    getTasks = () => {
+        axios.get(`http://localhost:8080/task/list`).then(res => {
             this.setState({
-                projects: res.data
+                tasks: res.data
             })
         })
     };
 
     componentDidMount() {
-        this.getProjects()
+        this.getTasks();
     }
 
     columns = [{
@@ -76,13 +77,21 @@ render() {
         }
     },
         {
+            dataField: 'projectId',
+            text: 'Project id',
+            editor: {
+                type: Type.SELECT,
+                options: this.state.projectIds
+            }
+        },
+        {
             dataField: "delete",
             formatter: () => {
                 return <MDBBtn style={{marginLeft: 60}} color="danger">Delete</MDBBtn>
             },
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    const url = `http://localhost:8080/project/remove/` + row.id;
+                    const url = `http://localhost:8080/task/remove/` + row.id;
                     axios.delete(url, {
                         headers: {
                             'Content-Type': 'application/json'
@@ -90,7 +99,7 @@ render() {
                         withCredentials: true
                     })
                         .then(res => {
-                            this.getProjects()
+                            this.getTasks()
                         });},
             },
             editable: false,
@@ -104,21 +113,43 @@ render() {
             console.log("row", row);
             let data = JSON.stringify({
                 id: row.id,
+                projectId: row.projectId,
                 name: row.name,
                 description: row.description,
                 dateEnd: row.dateEnd
             });
-            axios.put(`http://localhost:8080/project`, data, {
+            axios.put(`http://localhost:8080/task`, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
             })
                 .then(res => {
-                    this.getProjects();
+                    this.getTasks();
                 });
         },
     });
 
+    getProjectsId = () => {
+        axios.get(`http://localhost:8080/project/list`).then(res => {
+            const projectIds = [
+            ];
+
+            res.data.forEach(function(element) {
+                const obj = {
+                    value: element.id,
+                    label: element.id
+                };
+                projectIds.push(obj);
+            });
+
+            this.setState({
+                projectIds: projectIds
+            });
+        })
+    };
+
+
+
 }
-export default EditTable
+export default TaskTable

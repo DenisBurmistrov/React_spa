@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {MDBBtn, MDBInput} from 'mdbreact';
-import "../css/index.css";
+import "../../css/index.css";
 import axios from "axios";
 
 class CreateProject extends Component {
