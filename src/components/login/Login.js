@@ -6,7 +6,9 @@ class Login extends Component {
 
 
     state: {
-        projectIds: []
+        projectIds: [],
+        username: "",
+        password: ""
     };
     render() {
         return (
@@ -22,13 +24,15 @@ class Login extends Component {
                                 </MDBRow>
                             </div>
                             <MDBCardBody className="mx-4 mt-4">
-                                <MDBInput label="Your username" group type="text" validate/>
+                                <MDBInput label="Your username" group type="text"
+                                          onChange={this.handleInputUsername}/>
                                 <MDBInput
                                     label="Your password"
                                     group
                                     type="password"
                                     validate
                                     containerClass="mb-0"
+                                    onChange={this.handleInputPassword}
                                 />
                                 <div className="text-center mb-4 mt-5">
                                     <MDBBtn
@@ -59,10 +63,10 @@ class Login extends Component {
 
     handlerLogin = () => {
         this.props.getProjectIds();
-        this.props.handlerAuth(true)
-        /*let data = JSON.stringify({
-            username: "admin",
-            password: "admin"
+        this.props.handlerAuth(true);
+        let data = JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
         });
 
         axios.post(`http://localhost:8080/auth`, data, {
@@ -76,8 +80,20 @@ class Login extends Component {
                 console.log("response Post data", res.data);
                 console.log("response Post headers",res.headers);
 
-            });*/
-    }
+            });
+    };
+
+    handleInputUsername = (value) => {
+        this.setState({
+            username: value.target.value
+        });
+    };
+
+    handleInputPassword = (value) => {
+        this.setState({
+            password: value.target.value
+        });
+    };
 
 }
 export default Login;
