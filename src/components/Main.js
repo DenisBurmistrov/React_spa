@@ -32,6 +32,21 @@ class Main extends Component {
                 <ul className="header" >
                     <li><NavLink to="/">Projects</NavLink></li>
                     <li><NavLink to="/tasks">Tasks</NavLink></li>
+                    <li><NavLink to="/logout" onClick={() =>
+                        axios.post(`http://localhost:8080/logout`, "", {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            withCredentials: true
+                        })
+                            .then(res => {
+                                if(res.status === 200) {
+                                    this.setState({
+                                        isAuth: false
+                                    });
+                                }
+                            })
+                    }>logout</NavLink></li>
                 </ul>
                 <div className="table">
                     <Route exact path="/" component={this.ProjectTableComponent}/>
