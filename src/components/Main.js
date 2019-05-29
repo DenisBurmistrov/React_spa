@@ -79,7 +79,7 @@ class Main extends Component {
     };
 
     getProjectsId = () => {
-        axios.get(`http://localhost:8080/project/list`).then(res => {
+        axios.get(`http://localhost:8080/api/project/list`).then(res => {
             const projectIds = [
             ];
 

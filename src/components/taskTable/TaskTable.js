@@ -129,27 +129,5 @@ class TaskTable extends Component {
                 });
         },
     });
-
-    getProjectsId = () => {
-        axios.get(`http://localhost:8080/api/project/list`).then(res => {
-            const projectIds = [
-            ];
-
-            res.data.forEach(function(element) {
-                const obj = {
-                    value: element.id,
-                    label: element.id
-                };
-                projectIds.push(obj);
-            });
-
-            this.setState({
-                projectIds: projectIds
-            });
-        })
-    };
-
-
-
 }
 export default TaskTable

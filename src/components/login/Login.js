@@ -63,7 +63,6 @@ class Login extends Component {
 
     handlerLogin = () => {
         this.props.getProjectIds();
-        this.props.handlerAuth(true);
         let data = JSON.stringify({
             username: this.state.username,
             password: this.state.password
@@ -76,9 +75,9 @@ class Login extends Component {
             withCredentials: true
         })
             .then(res => {
-                console.log("response Post ", res);
-                console.log("response Post data", res.data);
-                console.log("response Post headers",res.headers);
+                if(res.status === 200) {
+                    this.props.handlerAuth(true);
+                }
 
             });
     };
