@@ -73,7 +73,7 @@ class CreateProject extends Component {
             dateEnd: this.state.dateEnd
         });
 
-        axios.post(`http://localhost:8080/project`, data, {
+        axios.post(`http://localhost:8080/api/project`, data, {
             headers: {
                 'Content-Type': 'application/json'
             },

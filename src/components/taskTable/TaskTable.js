@@ -45,7 +45,7 @@ class TaskTable extends Component {
     };
 
     getTasks = () => {
-        axios.get(`http://localhost:8080/task/list`).then(res => {
+        axios.get(`http://localhost:8080/api/task/list`).then(res => {
             this.setState({
                 tasks: res.data
             })
@@ -91,7 +91,7 @@ class TaskTable extends Component {
             },
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    const url = `http://localhost:8080/task/remove/` + row.id;
+                    const url = `http://localhost:8080/api/task/remove/` + row.id;
                     axios.delete(url, {
                         headers: {
                             'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ class TaskTable extends Component {
                 description: row.description,
                 dateEnd: row.dateEnd
             });
-            axios.put(`http://localhost:8080/task`, data, {
+            axios.put(`http://localhost:8080/api/task`, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -131,7 +131,7 @@ class TaskTable extends Component {
     });
 
     getProjectsId = () => {
-        axios.get(`http://localhost:8080/project/list`).then(res => {
+        axios.get(`http://localhost:8080/api/project/list`).then(res => {
             const projectIds = [
             ];
 

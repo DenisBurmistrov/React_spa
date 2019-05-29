@@ -46,7 +46,7 @@ render() {
     };
 
     getProjects = () => {
-        axios.get(`http://localhost:8080/project/list`).then(res => {
+        axios.get(`http://localhost:8080/api/project/list`).then(res => {
             this.setState({
                 projects: res.data
             })
@@ -84,7 +84,7 @@ render() {
             },
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    const url = `http://localhost:8080/project/remove/` + row.id;
+                    const url = `http://localhost:8080/api/project/remove/` + row.id;
                     axios.delete(url, {
                         headers: {
                             'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ render() {
                 description: row.description,
                 dateEnd: row.dateEnd
             });
-            axios.put(`http://localhost:8080/project`, data, {
+            axios.put(`http://localhost:8080/api/project`, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -76,7 +76,7 @@ class CreateTask extends Component {
             dateEnd: this.state.dateEnd
         });
 
-        axios.post(`http://localhost:8080/task`, data, {
+        axios.post(`http://localhost:8080/api/task`, data, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -85,7 +85,7 @@ class CreateTask extends Component {
             .then(res => {
                 this.props.handlerAddTask(false)
             });
-    }
+    };
 
     handleSelect = (value) =>{
         this.setState({
@@ -100,7 +100,5 @@ class CreateTask extends Component {
     componentDidMount(): void {
         this.getProjects();
     }
-
-
 }
 export default CreateTask
